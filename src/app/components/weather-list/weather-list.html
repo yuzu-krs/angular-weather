@@ -1,12 +1,68 @@
 <div>
+  <!-- テンプレート式: {{ }} を使用してコンポーネントのプロパティを表示 -->
   <h1>{{ title }}</h1>
+  <!-- weatherList() は signal なので () で値を取得して length プロパティでリスト数を表示 -->
   <p>現在 {{ weatherList().length }} 件の天気情報があります</p>
+
+  <!-- 新規追加フォーム (双方向バインディング) -->
+  <!-- [(ngModel)] は双方向バインディングで、入力値をコンポーネントの signal と同期 -->
   <div>
-    @for (weather of weatherList();track weather.id){
-    <div>
-      <h2>{{ weather.city }}</h2>
-      <p>気温: {{ weather.temperature }}℃</p>
-      <p>天気: {{ weather.condition }}</p>
+    <!-- 都市名入力: newCity signal と双方向で同期 -->
+    <input type="text" placeholder="都市名" [(ngModel)]="newCity" />
+
+    <!-- 気温入力: newTemperature signal と双方向で同期 (数値型) -->
+    <input type="number" placeholder="気温" [(ngModel)]="newTemperature" />
+
+    <!-- 天気入力: newCondition signal と双方向で同期 -->
+    <input type="text" placeholder="天気" [(ngModel)]="newCondition" />
+
+    <!-- イベントハンドリング: (click) でクリック時に onAddWeather() メソッドを実行 -->
+    <button (click)="onAddWeather()">追加</button>
+  </div>
+
+  <!-- リスト表示エリア -->
+  <div>
+    <!-- @for: Angular v17+ の新しいループ構文 -->
+    <!-- of weatherList() : signal の値をループ -->
+    <!-- track weather.id : パフォーマンス最適化用、各要素を id で識別 -->
+    @for (weather of weatherList(); track weather.id) {
+
+    <!-- プロパティバインディング: [class.selected] -->
+    <!-- isSelected(weather.id) が true の場合、selected クラスが付与される -->
+    <div [class.selected]="isSelected(weather.id)">
+      <!-- イベントハンドリング: (click) -->
+      <!-- 天気情報をクリックして選択状態を切り替え -->
+      <h2 (click)="onSelectWeather(weather.id)">{{ weather.city }}</h2>
+
+      <!-- 選択時に詳細表示 (条件付きレンダリング) -->
+      <!-- @if: Angular v17+ の新しい条件分岐構文 -->
+      <!-- isSelected(weather.id) が true の場合のみこのブロックを表示 -->
+      @if (isSelected(weather.id)) {
+      <div>
+        <!-- プロパティバインディング: [value] -->
+        <!-- weather.temperature の値を input の value に設定（単方向） -->
+        <p>
+          気温:
+          <!-- イベントハンドリング: (change) -->
+          <!-- input の値が変更されたときに onUpdateTemperature() を実行 -->
+          <!-- $any($event.target).value で input の現在値を取得して数値に変換 -->
+          <input
+            type="number"
+            [value]="weather.temperature"
+            (change)="onUpdateTemperature(weather.id, $any($event.target).value)"
+          />℃
+        </p>
+
+        <!-- テンプレート式で各プロパティを表示 -->
+        <p>天気: {{ weather.condition }}</p>
+        <p>湿度: {{ weather.humidity }}%</p>
+        <p>風速: {{ weather.windSpeed }} km/h</p>
+
+        <!-- イベントハンドリング: 削除ボタン -->
+        <!-- (click) で onDelete() メソッドを実行して天気情報を削除 -->
+        <button (click)="onDelete(weather.id)">削除</button>
+      </div>
+      }
     </div>
     }
   </div>

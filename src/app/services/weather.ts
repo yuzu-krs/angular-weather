@@ -39,4 +39,22 @@ export class WeatherService {
       // → 結果的に id が一致する要素は削除される
     );
   }
+
+  updateTemperature(id: number, temperature: number): void {
+    // weatherData は signal<Weather[]>（Weather の配列）です
+    // ここで update() を使って配列の中身を変える処理をします
+
+    this.weatherData.update((list) =>
+      // list.map() で配列の全要素を走査
+      list.map((w) =>
+        // 条件: 対象の id と一致するか
+        w.id === id
+          ? // 一致した場合はスプレッド構文で元のオブジェクトをコピーし、
+            // temperature プロパティだけ新しい値に置き換える
+            { ...w, temperature }
+          : // 一致しない場合はそのまま返す
+            w
+      )
+    );
+  }
 }
