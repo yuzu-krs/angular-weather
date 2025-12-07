@@ -1,0 +1,45 @@
+Angular v20
+@forやsignalを前提とした書き方でお願いします。
+モデル・サービス・コンポーネントを明確に分けた設計を重視してください。
+
+1.コンポーネントの作成
+2.テンプレート構文（HTMLの書き方）
+
+3.テンプレート式（{{ }}）
+
+4.イベントハンドリング（(click) など）
+5.プロパティバインディング
+6.双方向バインディング
+
+7.@if
+8.@for
+
+9.親子コンポーネントのデータ受け渡し
+10.コンポーネント分割の設計方法
+11.サービス（Service）の役割
+12.DI（依存性注入）
+13.DI のスコープ（root / component / provider）
+
+14.Angular Router の基礎
+15.RouterLink / RouterOutlet
+16.パラメータ付きルート（/product/1 など）
+17.複数ページの構築（/1, /2）
+18.ガード（AuthGuard）※初級では不要だけど知識として
+
+19.HttpClientModule
+20.GET / POST の書き方
+21.Observable の基本（subscribe）
+22.エラーハンドリング
+23.サービスを使った API 分離設計
+
+24.テンプレート駆動フォーム
+25.Reactive Forms（FormGroup / FormControl）
+26.バリデーション
+
+27.Local state（コンポーネント内部の状態）
+28.Service を使った状態共有
+
+30.Pipe（| date | currency など）
+31.Lifecycle Hooks（ngOnInit など）
+32.インターフェース（型定義）
+33.ユーティリティ関数（RxJS map/tap/filter）※必要最低限でOK

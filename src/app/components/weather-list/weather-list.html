@@ -1,0 +1,13 @@
+<div>
+  <h1>{{ title }}</h1>
+  <p>現在 {{ weatherList().length }} 件の天気情報があります</p>
+  <div>
+    @for (weather of weatherList();track weather.id){
+    <div>
+      <h2>{{ weather.city }}</h2>
+      <p>気温: {{ weather.temperature }}℃</p>
+      <p>天気: {{ weather.condition }}</p>
+    </div>
+    }
+  </div>
+</div>
